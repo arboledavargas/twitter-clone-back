@@ -1,0 +1,53 @@
+type Query {
+  currentUser: User!
+  feed(page: Int!, pageSize: Int!): [Tweet!]!
+}
+
+type Mutation {
+  createTweet(tweet: CreateTweetInput!): CreateTweetPayload
+}
+
+input CreateTweetInput {
+  body: String!
+  visibility: Visibility!
+}
+
+type CreateTweetPayload {
+  tweet: Tweet!
+  successfull: Boolean!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  bio: String!
+  location: String!
+  avatarUrl: String!
+  followersCount: Int!
+  followingCount: Int!
+  createdAt: String!
+}
+
+type Tweet {
+  id: ID!
+  body: String!
+  author: User!
+  createdAt: String!
+  retweetCount: Int!
+  likeCount: Int!
+  replyCount: Int!
+  visibility: Visibility!
+  type: TweetType!
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum TweetType {
+  ORIGINAL
+  RETWEET
+  REPLY
+}

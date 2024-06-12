@@ -1,0 +1,43 @@
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id String @id()
+  name String
+  email String
+  bio String
+  location String
+  avatarUrl String
+  followersCount Int
+  followingCount Int
+  createdAt DateTime
+}
+
+model Tweet {
+  id String @id()
+  body String
+  author String
+  createdAt DateTime
+  retweetCount Int
+  likeCount Int
+  replyCount Int
+  visibility visibility @default(PUBLIC)
+  type tweetType @default(ORIGINAL)
+}
+
+enum visibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum tweetType {
+  ORIGINAL
+  RETWEET
+  REPLY
+}
