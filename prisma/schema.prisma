@@ -8,27 +8,29 @@ generator client {
 }
 
 model User {
-  id String @id()
-  name String
-  email String
-  bio String
-  location String
-  avatarUrl String
+  id             String   @id()
+  name           String
+  email          String
+  bio            String
+  location       String
+  avatarUrl      String
   followersCount Int
   followingCount Int
-  createdAt DateTime
+  createdAt      DateTime
+  Tweets         Tweet[]
 }
 
 model Tweet {
-  id String @id()
-  body String
-  author String
-  createdAt DateTime
+  id           String     @id()
+  body         String
+  authorId     String
+  createdAt    DateTime
   retweetCount Int
-  likeCount Int
-  replyCount Int
-  visibility visibility @default(PUBLIC)
-  type tweetType @default(ORIGINAL)
+  likeCount    Int
+  replyCount   Int
+  visibility   visibility @default(PUBLIC)
+  type         tweetType  @default(ORIGINAL)
+  author       User       @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 enum visibility {

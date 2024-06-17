@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import { TeeetService } from "./tweet/tweet.service";
 import { ConfigModule } from '@nestjs/config';
 import { validateConfig } from "./common/validate-config";
+import { TweetResolver, TweetRepository, TeeetService } from "./tweet";
+import { PrismaService } from "./common/prisma.service";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,6 +21,6 @@ import { validateConfig } from "./common/validate-config";
     })
   ],
   controllers: [],
-  providers: [TeeetService],
+  providers: [TeeetService, TweetResolver, PrismaService, TweetRepository],
 })
 export class AppModule {}
