@@ -1,15 +1,15 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { UUID } from "../common/uuid.decorator";
-import { CreateTweetInput, CreateTweetPayload } from "../graphql";
-import { TeeetService } from "./tweet.service";
+import { CreateTweetInput, CreateTweetPayload, Tweet } from "../graphql";
+import { TweetService } from "./tweet.service";
 @Resolver('Tweet')
 export class TweetResolver {
 
-	constructor(private tweetService: TeeetService) { }
+	constructor(private tweetService: TweetService) { }
 
 	@Query()
-	async feed() {
-		
+	async feed(@UUID() UUID: string): Promise<Tweet[]> {
+		return this.tweetService.getFeedForUser(UUID)
 	}
 
 	@Mutation()

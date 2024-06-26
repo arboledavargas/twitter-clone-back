@@ -1,10 +1,11 @@
 type Query {
   currentUser: User!
-  feed(page: Int!, pageSize: Int!): [Tweet!]!
+  feed(from: String!, take: number!): feedConnection!
 }
 
 type Mutation {
-  createTweet(tweet: CreateTweetInput!): CreateTweetPayload
+  createTweet(tweet: CreateTweetInput!): CreateTweetPayload!
+  createUser(uuid: String!): CreateUserPayload!
 }
 
 input CreateTweetInput {
@@ -15,6 +16,27 @@ input CreateTweetInput {
 type CreateTweetPayload {
   tweet: Tweet!
   successfull: Boolean!
+}
+
+type CreateUserPayload {
+  user: User!
+  successfull: Boolean!
+}
+
+type feedConnection {
+  edges: [feedEdge!]!
+  pageInfo: pageInfo
+}
+
+type feedEdge {
+  cursor: String!
+  node: Tweet
+}
+
+type pageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
 }
 
 type User {

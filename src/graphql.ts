@@ -30,11 +30,17 @@ export interface IQuery {
 }
 
 export interface IMutation {
-    createTweet(tweet: CreateTweetInput): Nullable<CreateTweetPayload> | Promise<Nullable<CreateTweetPayload>>;
+    createTweet(tweet: CreateTweetInput): CreateTweetPayload | Promise<CreateTweetPayload>;
+    createUser(uuid: string): CreateUserPayload | Promise<CreateUserPayload>;
 }
 
 export interface CreateTweetPayload {
     tweet: Tweet;
+    successfull: boolean;
+}
+
+export interface CreateUserPayload {
+    user: User;
     successfull: boolean;
 }
 

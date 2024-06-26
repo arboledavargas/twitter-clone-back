@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { CreateTweetInput, CreateTweetPayload, User } from "../graphql";
+import { CreateTweetInput, CreateTweetPayload, User, Tweet as gqlTweet } from "../graphql";
 import { TweetRepository } from "./tweet.repository";
 import { Tweet } from "../models/tweet.model";
-
+import { GetUserTweetsQuery } from "./queries/get-user-tweets.query";
 @Injectable()
-export class TeeetService {
+export class TweetService {
 	constructor(private tweetRepository: TweetRepository){  }
 
 	async createTweet(createTweetInput:CreateTweetInput, userId: string): Promise<CreateTweetPayload> {
@@ -30,5 +30,23 @@ export class TeeetService {
 				type: newTweet.type
 			}
 		}
+	}
+
+	async getFeedForUser(uuid:string): Promise<gqlTweet[]> {
+		const result = await this.tweetRepository.queryMany(new GetUserTweetsQuery({
+			uuid
+		}));
+
+		return result.map( _ => ({
+			author: {} as User,
+			body: _.body,
+			createdAt: _.createdAt.toISOString(), 
+			id: _.id,
+			likeCount: _.likeCount,
+			replyCount: _.replyCount,
+			retweetCount: _.retweetCount,
+			type: _.type,
+			visibility: _.visibility,
+		}))
 	}
 }

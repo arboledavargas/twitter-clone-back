@@ -16,7 +16,6 @@ type TweetProps = {
 
 export class Tweet extends Model {
 
-	id: string;
 	body: string;
 	authorId: string;
 	createdAt: Date;
@@ -26,9 +25,8 @@ export class Tweet extends Model {
 	visibility: Visibility;
 	type: TweetType;
 
-	private constructor(props: TweetProps){
-		super(props.id);
-		this.id = props.id;
+	private constructor(props: TweetProps, isNew: boolean){
+		super(props.id, isNew);
 		this.body = props.body;
 		this.authorId = props.authorId;
 		this.createdAt = props.createdAt;
@@ -49,10 +47,10 @@ export class Tweet extends Model {
 			retweetCount: 0,
 			type: TweetType.ORIGINAL,
 			...props
-		});
+		}, true);
 	}
 
 	static createExisting(props: TweetProps): Tweet {
-		return new Tweet(props);
+		return new Tweet(props, false);
 	}
 }
