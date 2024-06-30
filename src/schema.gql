@@ -1,6 +1,6 @@
 type Query {
   currentUser: User!
-  feed(from: String!, take: number!): feedConnection!
+  feed(take: Int!, from: String): FeedConnection!
 }
 
 type Mutation {
@@ -23,17 +23,17 @@ type CreateUserPayload {
   successfull: Boolean!
 }
 
-type feedConnection {
-  edges: [feedEdge!]!
-  pageInfo: pageInfo
+type FeedConnection {
+  edges: [FeedEdge!]!
+  pageInfo: PageInfo
 }
 
-type feedEdge {
+type FeedEdge {
   cursor: String!
-  node: Tweet
+  node: Tweet!
 }
 
-type pageInfo {
+type PageInfo {
   endCursor: String
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -42,6 +42,7 @@ type pageInfo {
 type User {
   id: ID!
   name: String!
+  handle: String!
   email: String!
   bio: String!
   location: String!
@@ -49,6 +50,7 @@ type User {
   followersCount: Int!
   followingCount: Int!
   createdAt: String!
+
 }
 
 type Tweet {

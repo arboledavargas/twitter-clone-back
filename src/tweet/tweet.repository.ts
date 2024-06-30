@@ -3,7 +3,7 @@ import { IRepository } from "../primitives/repository";
 import { Tweet } from "../models/tweet.model";
 import { Prisma } from "@prisma/client";
 import { IQuery } from "src/primitives/query";
-import { PrismaService } from "../common/prisma.service";
+import { PrismaService } from "../common/database/prisma.service";
 import { TweetType, Visibility } from "../graphql";
 
 @Injectable()

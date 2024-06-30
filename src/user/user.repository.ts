@@ -3,7 +3,7 @@ import { IRepository } from "../primitives/repository";
 import { User } from "../models/user.model";
 import { Prisma } from "@prisma/client";
 import { IQuery } from "src/primitives/query";
-import { PrismaService } from "../common/prisma.service";
+import { PrismaService } from "../common/database/prisma.service";
 @Injectable()
 export class UserRepository implements IRepository<User, Prisma.UserWhereInput> {
 

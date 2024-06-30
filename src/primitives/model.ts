@@ -1,6 +1,7 @@
 export interface IModel {
 	id: string | undefined
 	isNew: boolean
+	serialize: <T>() => T
 }
 
 export abstract class Model implements IModel {
@@ -13,4 +14,5 @@ export abstract class Model implements IModel {
 		this.isNew = isNew
 	}
 
+	abstract serialize();
 }

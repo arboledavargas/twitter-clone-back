@@ -26,7 +26,7 @@ export interface CreateTweetInput {
 
 export interface IQuery {
     currentUser(): User | Promise<User>;
-    feed(page: number, pageSize: number): Tweet[] | Promise<Tweet[]>;
+    feed(take: number, from?: Nullable<string>): FeedConnection | Promise<FeedConnection>;
 }
 
 export interface IMutation {
@@ -42,6 +42,22 @@ export interface CreateTweetPayload {
 export interface CreateUserPayload {
     user: User;
     successfull: boolean;
+}
+
+export interface FeedConnection {
+    edges: FeedEdge[];
+    pageInfo?: Nullable<PageInfo>;
+}
+
+export interface FeedEdge {
+    cursor: string;
+    node: Tweet;
+}
+
+export interface PageInfo {
+    endCursor?: Nullable<string>;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
 }
 
 export interface User {

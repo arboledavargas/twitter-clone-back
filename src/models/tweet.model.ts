@@ -1,6 +1,6 @@
-import { Model } from "../primitives/model";
-import { Visibility, TweetType } from "../graphql";
 import { randomUUID } from "crypto";
+import { TweetType, User, Visibility, Tweet as gqlTweet } from "../graphql";
+import { Model } from "../primitives/model";
 
 type TweetProps = {
 	id: string | undefined,
@@ -52,5 +52,19 @@ export class Tweet extends Model {
 
 	static createExisting(props: TweetProps): Tweet {
 		return new Tweet(props, false);
+	}
+
+	serialize(): gqlTweet {
+			return {
+				author: { id: this.authorId } as User,
+				body: this.body,
+				createdAt: this.createdAt.toISOString(),
+				id: this.id,
+				likeCount: this.likeCount,
+				replyCount: this.replyCount,
+				retweetCount: this.retweetCount,
+				type: this.type,
+				visibility: this.visibility
+			}
 	}
 }

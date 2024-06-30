@@ -1,32 +1,26 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { validateConfig } from "./common/validate-config";
 import { TweetResolver, TweetRepository, TweetService } from "./tweet";
-import { PrismaService } from "./common/prisma.service";
-import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
-import { UserResolver } from "./user/user.resolver";
-import { UserService } from "./user/user.service";
-import { UserRepository } from "./user/user.repository";
+import { PrismaService } from "./common/database/prisma.service";
+import { GraphQLConfig } from "./common/graphqlConfig";
+import { UserModule } from "./user/user.module";
 @Module({
   imports: [
+    UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
       validate: validateConfig
     }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      imports:[UserModule],
       driver: ApolloDriver,
-      typePaths: ['./**/*.gql'],
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
-      definitions: {
-        path: join(process.cwd(), 'src/graphql.ts'),
-      },
+      useClass: GraphQLConfig
     })
   ],
   controllers: [],
-  providers: [TweetService, TweetResolver, UserResolver, UserService, PrismaService, TweetRepository, UserRepository],
+  providers: [TweetService, TweetResolver, PrismaService, TweetRepository],
 })
 export class AppModule {}

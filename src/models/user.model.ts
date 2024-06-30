@@ -1,4 +1,5 @@
 import { Model } from "../primitives/model";
+import { User as gqlUser } from "../graphql";
 
 type props = {
   id: string;
@@ -52,5 +53,19 @@ export class User extends Model {
 
 	static createExisting(props: props): User {
 		return new User(props, false);
+	}
+
+	serialize(): gqlUser {
+		return {
+			avatarUrl: this.avatarUrl,
+			bio: this.bio,
+			email: this.email,
+			followersCount: this.followersCount,
+			followingCount: this.followingCount,
+			location: this.location,
+			name: this.name,
+			createdAt: this.createdAt.toISOString(),
+			id: this.id
+		}
 	}
 }
