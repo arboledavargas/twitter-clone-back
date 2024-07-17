@@ -11,6 +11,7 @@ type props = {
   followersCount: number;
   followingCount: number;
   createdAt: Date;
+	handle: string;
 }
 
 export class User extends Model {
@@ -23,17 +24,19 @@ export class User extends Model {
   followersCount: number
   followingCount: number
   createdAt: Date
+	handle: string;
 
 	private constructor(props: props, isNew:boolean){
 		super(props.id, isNew);
 		this.avatarUrl = props.avatarUrl;
 		this.bio = props.bio;
-		this.email = props.email,
-		this.followersCount = props.followersCount,
-		this.followingCount = props.followingCount,
-		this.location = props.location,
-		this.name = props.name,
-		this.createdAt = props.createdAt
+		this.email = props.email;
+		this.followersCount = props.followersCount;
+		this.followingCount = props.followingCount;
+		this.location = props.location;
+		this.name = props.name;
+		this.createdAt = props.createdAt;
+		this.handle = props.handle;
 	}
 
 	static createNew(props: Omit<props, 'createdAt' | 'followersCount' | 'followingCount'>): User {
@@ -48,6 +51,7 @@ export class User extends Model {
 			location: props.location,
 			name: props.name,
 			createdAt: new Date(),
+			handle: props.handle
 		}, true);
 	}
 
@@ -65,7 +69,8 @@ export class User extends Model {
 			location: this.location,
 			name: this.name,
 			createdAt: this.createdAt.toISOString(),
-			id: this.id
+			id: this.id,
+			handle: this.handle
 		}
 	}
 }

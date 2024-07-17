@@ -1,5 +1,5 @@
 type Query {
-  currentUser: User!
+  currentUser: User
   feed(take: Int!, from: String): FeedConnection!
 }
 

@@ -25,7 +25,7 @@ export interface CreateTweetInput {
 }
 
 export interface IQuery {
-    currentUser(): User | Promise<User>;
+    currentUser(): Nullable<User> | Promise<Nullable<User>>;
     feed(take: number, from?: Nullable<string>): FeedConnection | Promise<FeedConnection>;
 }
 
@@ -63,6 +63,7 @@ export interface PageInfo {
 export interface User {
     id: string;
     name: string;
+    handle: string;
     email: string;
     bio: string;
     location: string;

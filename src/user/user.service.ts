@@ -1,11 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { UserRepository } from "./user.repository";
 import { User } from "../models/user.model";
-import { CreateUserPayload } from "../graphql";
+import { CreateUserPayload, User as gqlUser} from "../graphql";
 import { findUserById } from "./queries/find-user-by-id.query";
 import { findUserByIdIn } from "./queries/find-user-with-id-in.query";
 @Injectable()
 export class UserService {
+
 
 	constructor(private userRepository: UserRepository) {
 
@@ -24,17 +25,7 @@ export class UserService {
 		if(existingUser) {
 			return {
 			successfull: true,
-			user: {
-				avatarUrl: existingUser.avatarUrl,
-				bio: existingUser.bio,
-				createdAt: existingUser.createdAt.toISOString(),
-				email: existingUser.email,
-				followersCount: existingUser.followersCount,
-				followingCount: existingUser.followingCount,
-				id: existingUser.id,
-				location: existingUser.location,
-				name: existingUser.name
-			}
+			user: existingUser.serialize()
 		}
 	}
 
@@ -44,24 +35,23 @@ export class UserService {
 			bio: '',
 			email: '',
 			name: '',
-			location: ''
+			location: '',
+			handle: '',
 		})
 
 		await this.userRepository.save(newUser);
 
 		return {
 			successfull: true,
-			user: {
-				avatarUrl: newUser.avatarUrl,
-				bio: newUser.bio,
-				createdAt: newUser.createdAt.toISOString(),
-				email: newUser.email,
-				followersCount: newUser.followersCount,
-				followingCount: newUser.followingCount,
-				id: newUser.id,	
-				location: newUser.location,
-				name: newUser.name
-			}
+			user: newUser.serialize()
 		}
+	}
+
+	async getUser(uuid: string): Promise<User | null> {
+		const user = await this.userRepository.queryOne(new findUserById({ id: uuid }));
+
+		if(!user) return null
+
+		return user
 	}
 }
