@@ -5,12 +5,22 @@ type Query {
 
 type Mutation {
   createTweet(tweet: CreateTweetInput!): CreateTweetPayload!
-  createUser(uuid: String!): CreateUserPayload!
+  createUser(user: CreateUserInput!): CreateUserPayload!
 }
 
 input CreateTweetInput {
   body: String!
   visibility: Visibility!
+}
+
+input CreateUserInput {
+  name: String!
+  handle: String
+  email: String!
+  bio: String
+  location: String
+  avatarUrl: String
+  birthDate: String!
 }
 
 type CreateTweetPayload {
@@ -42,15 +52,15 @@ type PageInfo {
 type User {
   id: ID!
   name: String!
-  handle: String!
+  handle: String
   email: String!
-  bio: String!
-  location: String!
+  bio: String
+  location: String
   avatarUrl: String!
   followersCount: Int!
   followingCount: Int!
   createdAt: String!
-
+  birthDate: String!
 }
 
 type Tweet {

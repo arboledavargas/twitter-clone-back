@@ -10,13 +10,14 @@ generator client {
 model User {
   id             String   @id()
   name           String
-  handle         String
+  handle         String?
   email          String
-  bio            String
-  location       String
+  bio            String?
+  location       String?
   avatarUrl      String
   followersCount Int
   followingCount Int
+  birthDate      DateTime
   createdAt      DateTime
   Tweets         Tweet[]
 

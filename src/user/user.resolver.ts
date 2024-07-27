@@ -1,6 +1,6 @@
-import { Mutation, Resolver, Query } from "@nestjs/graphql";
+import { Mutation, Resolver, Query, Args } from "@nestjs/graphql";
 import { UUID } from "../common/uuid.decorator";
-import { CreateUserPayload, User} from "../graphql";
+import { CreateUserPayload, User, CreateUserInput} from "../graphql";
 import { UserService } from "../user/user.service";
 
 @Resolver('User')
@@ -10,8 +10,8 @@ export class UserResolver {
 	}
 
 	@Mutation()
-	async createUser(@UUID() uuid: string ): Promise<CreateUserPayload> {
-		return await this.userService.createUser(uuid)
+	async createUser(@UUID() uuid: string, @Args('user') createUserInput: CreateUserInput): Promise<CreateUserPayload> {
+		return await this.userService.createUser(createUserInput, uuid);
 	}
 	
 	@Query()

@@ -5,26 +5,28 @@ type props = {
   id: string;
   name: string;
   email: string;
-  bio: string;
-  location: string;
+  bio: string | null;
+  location: string | null;
   avatarUrl: string;
   followersCount: number;
   followingCount: number;
   createdAt: Date;
-	handle: string;
+	handle: string | null;
+	birthDate: Date;
 }
 
 export class User extends Model {
 
   name: string;
   email: string;
-  bio: string
-  location: string
-  avatarUrl: string
-  followersCount: number
-  followingCount: number
-  createdAt: Date
+  bio: string | null;
+  location: string | null;
+  avatarUrl: string;
+  followersCount: number;
+  followingCount: number;
+  createdAt: Date;
 	handle: string;
+	birthDate: Date | null;
 
 	private constructor(props: props, isNew:boolean){
 		super(props.id, isNew);
@@ -37,6 +39,7 @@ export class User extends Model {
 		this.name = props.name;
 		this.createdAt = props.createdAt;
 		this.handle = props.handle;
+		this.birthDate = props.birthDate;
 	}
 
 	static createNew(props: Omit<props, 'createdAt' | 'followersCount' | 'followingCount'>): User {
@@ -51,7 +54,8 @@ export class User extends Model {
 			location: props.location,
 			name: props.name,
 			createdAt: new Date(),
-			handle: props.handle
+			handle: props.handle,
+			birthDate: props.birthDate
 		}, true);
 	}
 
@@ -70,7 +74,8 @@ export class User extends Model {
 			name: this.name,
 			createdAt: this.createdAt.toISOString(),
 			id: this.id,
-			handle: this.handle
+			handle: this.handle,
+			birthDate: this.birthDate.toISOString()
 		}
 	}
 }

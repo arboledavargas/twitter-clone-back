@@ -24,6 +24,16 @@ export interface CreateTweetInput {
     visibility: Visibility;
 }
 
+export interface CreateUserInput {
+    name: string;
+    handle?: Nullable<string>;
+    email: string;
+    bio?: Nullable<string>;
+    location?: Nullable<string>;
+    avatarUrl?: Nullable<string>;
+    birthDate: string;
+}
+
 export interface IQuery {
     currentUser(): Nullable<User> | Promise<Nullable<User>>;
     feed(take: number, from?: Nullable<string>): FeedConnection | Promise<FeedConnection>;
@@ -31,7 +41,7 @@ export interface IQuery {
 
 export interface IMutation {
     createTweet(tweet: CreateTweetInput): CreateTweetPayload | Promise<CreateTweetPayload>;
-    createUser(uuid: string): CreateUserPayload | Promise<CreateUserPayload>;
+    createUser(user: CreateUserInput): CreateUserPayload | Promise<CreateUserPayload>;
 }
 
 export interface CreateTweetPayload {
@@ -63,14 +73,15 @@ export interface PageInfo {
 export interface User {
     id: string;
     name: string;
-    handle: string;
+    handle?: Nullable<string>;
     email: string;
-    bio: string;
-    location: string;
+    bio?: Nullable<string>;
+    location?: Nullable<string>;
     avatarUrl: string;
     followersCount: number;
     followingCount: number;
     createdAt: string;
+    birthDate: string;
 }
 
 export interface Tweet {

@@ -19,6 +19,8 @@ async function bootstrap() {
   app.use(jwtCheck);
 
   await app.listen(8080);
+
+  console.log('Server is running on port 8080')
 }
 
 bootstrap();

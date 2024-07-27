@@ -22,7 +22,8 @@ export class UserRepository implements IRepository<User, Prisma.UserWhereInput> 
 					createdAt: model.createdAt,
 					followersCount: model.followersCount,
 					followingCount: model.followingCount,
-					handle: model.handle
+					handle: model.handle,
+					birthDate: model.birthDate
 				}
 			})
 		} else {
@@ -39,7 +40,8 @@ export class UserRepository implements IRepository<User, Prisma.UserWhereInput> 
 					name: model.name,
 					createdAt: model.createdAt,
 					followersCount: model.followersCount,
-					followingCount: model.followingCount
+					followingCount: model.followingCount,
+					birthDate: model.birthDate
 				}
 			})
 		}
@@ -58,7 +60,8 @@ export class UserRepository implements IRepository<User, Prisma.UserWhereInput> 
 			createdAt: user.createdAt,
 			followersCount: user.followersCount,
 			followingCount: user.followingCount,
-			handle: user.handle
+			handle: user.handle,
+			birthDate: user.birthDate
 		}))
 	}
 
@@ -79,7 +82,8 @@ export class UserRepository implements IRepository<User, Prisma.UserWhereInput> 
 			createdAt: user.createdAt,
 			followersCount: user.followersCount,
 			followingCount: user.followingCount,
-			handle: user.handle
+			handle: user.handle,
+			birthDate: user.birthDate
 		})
 	}
 }
