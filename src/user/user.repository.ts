@@ -41,7 +41,8 @@ export class UserRepository implements IRepository<User, Prisma.UserWhereInput> 
 					createdAt: model.createdAt,
 					followersCount: model.followersCount,
 					followingCount: model.followingCount,
-					birthDate: model.birthDate
+					birthDate: model.birthDate,
+					handle: model.handle,
 				}
 			})
 		}

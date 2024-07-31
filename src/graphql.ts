@@ -42,6 +42,11 @@ export interface IQuery {
 export interface IMutation {
     createTweet(tweet: CreateTweetInput): CreateTweetPayload | Promise<CreateTweetPayload>;
     createUser(user: CreateUserInput): CreateUserPayload | Promise<CreateUserPayload>;
+    updateUserhandle(handle: string): UpdateUserHandlePayload | Promise<UpdateUserHandlePayload>;
+}
+
+export interface UpdateUserHandlePayload {
+    successfull: boolean;
 }
 
 export interface CreateTweetPayload {

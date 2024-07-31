@@ -1,12 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { UserRepository } from "./user.repository";
 import { User } from "../models/user.model";
-import { CreateUserPayload, User as gqlUser, CreateUserInput} from "../graphql";
+import { CreateUserPayload, CreateUserInput} from "../graphql";
 import { findUserById } from "./queries/find-user-by-id.query";
 import { findUserByIdIn } from "./queries/find-user-with-id-in.query";
+import { UpdateUserHandlePayload } from "../graphql";
+
 @Injectable()
 export class UserService {
-
 
 	constructor(private userRepository: UserRepository) {
 
@@ -54,5 +55,22 @@ export class UserService {
 		if(!user) return null
 
 		return user
+	}
+
+	async updateUserHandle(uuid: string, handle: string):Promise<UpdateUserHandlePayload> {
+		const user = await this.userRepository.queryOne(new findUserById({ id: uuid }));
+
+		if(!user) return {
+			successfull: false
+		}
+
+		user.updateHandle(handle);
+
+		await this.userRepository.save(user);
+
+		return {
+			successfull: true
+		}
+
 	}
 }

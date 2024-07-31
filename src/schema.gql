@@ -6,6 +6,7 @@ type Query {
 type Mutation {
   createTweet(tweet: CreateTweetInput!): CreateTweetPayload!
   createUser(user: CreateUserInput!): CreateUserPayload!
+  updateUserhandle(handle: String!): UpdateUserHandlePayload!
 }
 
 input CreateTweetInput {
@@ -21,6 +22,10 @@ input CreateUserInput {
   location: String
   avatarUrl: String
   birthDate: String!
+}
+
+type UpdateUserHandlePayload {
+  successfull: Boolean!
 }
 
 type CreateTweetPayload {

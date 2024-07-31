@@ -42,6 +42,10 @@ export class User extends Model {
 		this.birthDate = props.birthDate;
 	}
 
+	updateHandle(handle: string) {
+		this.handle = handle;
+	}
+
 	static createNew(props: Omit<props, 'createdAt' | 'followersCount' | 'followingCount'>): User {
 
 		return new User({
